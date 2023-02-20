@@ -30,6 +30,11 @@ export const typeDefs = `#graphql
     }
 
     type Query {
-        workspaces: [Workspace]
+        workspaces: [Workspace],
+        workspace(workspaceId: String!): Workspace,
+    }
+
+    type Mutation {
+        addUser(uid: String!, name: String!, picture: String, email: String!): User,
     }
 `;

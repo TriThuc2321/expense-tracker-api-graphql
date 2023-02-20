@@ -43,4 +43,4 @@ mongoose
     })
     .catch((err) => console.log(err));
 
-app.use(cors(), bodyParser.json(), expressMiddleware(server));
+app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
