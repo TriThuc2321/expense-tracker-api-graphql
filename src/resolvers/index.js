@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 
-import { UserModel, WorkspaceModel } from './../models/index.js';
+import { UserModel, WorkspaceModel, ProductTypeModel, ProductModel } from './../models/index.js';
 
 export const resolvers = {
     Query: {
@@ -10,16 +10,23 @@ export const resolvers = {
             const workspaces = await WorkspaceModel.find({ email }).populate('host').populate('collaborators');
             return workspaces;
         },
+
         workspace: async (parent, args) => {
             const { _id } = args;
             const workspace = await WorkspaceModel.findById(_id).populate('host').populate('collaborators');
 
             return workspace;
         },
+
         user: async (parent, args) => {
             const { email } = args;
             const data = await UserModel.findOne({ email });
             return data;
+        },
+
+        products: async (parent, args) => {
+            const products = await ProductModel.find({}).populate('buyer').populate('type');
+            return products;
         },
     },
     Mutation: {
@@ -60,6 +67,39 @@ export const resolvers = {
             try {
                 await WorkspaceModel.deleteOne({ _id });
                 return { message: 'Delete workspace successfully', type: 'SUCCESS' };
+            } catch (err) {
+                return { message: err.toString(), type: 'ERROR' };
+            }
+        },
+
+        addProductType: async (parent, args) => {
+            const { name } = args;
+
+            const newProductType = new ProductTypeModel({ name });
+            await newProductType.save();
+            return newProductType;
+        },
+
+        addProduct: async (parent, args) => {
+            const { name, price, typeId, buyer } = args;
+            const newProduct = new ProductModel({ name, price, type: typeId, buyer });
+            await newProduct.save();
+            return newProduct;
+        },
+
+        updateProduct: async (parent, args) => {
+            const { _id, name, price, type, buyer } = args;
+            const product = await ProductModel.findOneAndUpdate({ _id }, { name, price, type, buyer }, { new: true })
+                .populate('buyer')
+                .populate('type');
+            return product;
+        },
+
+        deleteProduct: async (parent, args) => {
+            const { _id } = args;
+            try {
+                await ProductModel.deleteOne({ _id });
+                return { message: 'Delete product successfully', type: 'SUCCESS' };
             } catch (err) {
                 return { message: err.toString(), type: 'ERROR' };
             }

@@ -12,11 +12,16 @@ export const typeDefs = `#graphql
         email: String
     }
 
+    type ProductType {
+        _id: String!
+        name: String!
+    }
+
     type Product {
         _id: String!,
         name: String,
         price: Int,
-        type: String,
+        type: ProductType,
         buyer: User
     }
 
@@ -39,13 +44,21 @@ export const typeDefs = `#graphql
     type Query {
         myWorkspaces: [Workspace],
         workspace(_id: String!): Workspace,
-        user(email: String!): User
+        user(email: String!): User,
+        products: [Product]
     }
 
     type Mutation {
         addUser(uid: String!, name: String!, picture: String, email: String!): User,
+
         addWorkspace(name: String!, host: String!, collaborators: [String]): Workspace,
-        updateWorkspace(_id: String!, name: String, collaborators: [String]): Workspace
-        deleteWorkspace(_id: String!): Message
+        updateWorkspace(_id: String!, name: String, collaborators: [String]): Workspace,
+        deleteWorkspace(_id: String!): Message,
+
+        addProductType(name: String!): ProductType,
+
+        addProduct(name: String!, typeId: String!, price: Int, buyer: String!): Product,
+        updateProduct(_id: String!, name: String, typeId: String, price: Int, buyer: String): Product,
+        deleteProduct(_id: String!): Message,
     }
 `;
