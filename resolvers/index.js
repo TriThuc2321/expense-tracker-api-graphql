@@ -54,5 +54,15 @@ export const resolvers = {
                 .populate('collaborators');
             return workspace;
         },
+
+        deleteWorkspace: async (parent, args) => {
+            const { _id } = args;
+            try {
+                await WorkspaceModel.deleteOne({ _id });
+                return { message: 'Delete workspace successfully', type: 'SUCCESS' };
+            } catch (err) {
+                return { message: err.toString(), type: 'ERROR' };
+            }
+        },
     },
 };

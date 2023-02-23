@@ -1,4 +1,9 @@
 export const typeDefs = `#graphql
+    type Message {
+        message: String,
+        type: String
+    }
+
     type User {
         _id: String!,
         uid: String!,
@@ -41,5 +46,6 @@ export const typeDefs = `#graphql
         addUser(uid: String!, name: String!, picture: String, email: String!): User,
         addWorkspace(name: String!, host: String!, collaborators: [String]): Workspace,
         updateWorkspace(_id: String!, name: String, collaborators: [String]): Workspace
+        deleteWorkspace(_id: String!): Message
     }
 `;
