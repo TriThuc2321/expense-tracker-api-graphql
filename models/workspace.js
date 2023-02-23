@@ -4,6 +4,7 @@ const workspaceSchema = new mongoose.Schema(
     {
         name: {
             type: String,
+            trim: true,
             required: true,
         },
         host: {
@@ -11,8 +12,12 @@ const workspaceSchema = new mongoose.Schema(
             ref: 'User',
         },
         bills: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: [mongoose.Schema.Types.ObjectId],
             ref: 'Bill',
+        },
+        collaborators: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'User',
         },
     },
     { timestamps: true },
