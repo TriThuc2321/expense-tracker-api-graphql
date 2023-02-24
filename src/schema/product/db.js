@@ -10,7 +10,6 @@ const productSchema = new mongoose.Schema(
             type: Number,
             require: true,
         },
-
         buyer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',

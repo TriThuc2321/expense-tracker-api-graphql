@@ -8,8 +8,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
-import { resolvers } from './resolvers/index.js';
-import { typeDefs } from './schemas/index.js';
+import { typeDefs, resolvers } from './schema/index.js';
 
 import './firebaseConfig.js';
 import 'dotenv/config';
