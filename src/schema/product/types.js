@@ -1,9 +1,9 @@
 const ProductType = `
     type Product {
-        _id: String!,
-        name: String,
-        price: Int,
-        type: ProductType,
+        _id: String!
+        name: String
+        price: Int
+        type: ProductType
         buyer: User
     }
     
@@ -11,17 +11,9 @@ const ProductType = `
         products: [Product]
     }
 
-    input ProductCreateInput {
-        name: String!, typeId: String!, price: Int, buyer: String!
-    }
-
-    input ProductUpdateInput {
-        _id: String!, name: String, typeId: String, price: Int, buyer: String
-    }
-
     extend type Mutation {
-        addProduct(data: ProductCreateInput ): Product,
-        updateProduct(data: ProductUpdateInput): Product,
+        addProduct( name: String!, typeId: String!, price: Int, buyerId: String!, billId: String!): Product,
+        updateProduct( _id: String!, name: String, typeId: String, price: Int, buyerId: String): Product,
         deleteProduct(_id: String!): Message,
     }
 `;

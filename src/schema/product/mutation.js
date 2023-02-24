@@ -2,15 +2,19 @@ import ProductModel from './db.js';
 
 const ProductMutation = {
     addProduct: async (parent, args) => {
-        const { name, price, typeId, buyer } = args;
-        const newProduct = new ProductModel({ name, price, type: typeId, buyer });
+        const { name, price, typeId, buyerId, billId } = args;
+        const newProduct = new ProductModel({ name, price, type: typeId, buyer: buyerId, bill: billId });
         await newProduct.save();
         return newProduct;
     },
 
     updateProduct: async (parent, args) => {
-        const { _id, name, price, type, buyer } = args;
-        const product = await ProductModel.findOneAndUpdate({ _id }, { name, price, type, buyer }, { new: true })
+        const { _id, name, price, type, buyerId } = args;
+        const product = await ProductModel.findOneAndUpdate(
+            { _id },
+            { name, price, type, buyer: buyerId },
+            { new: true },
+        )
             .populate('buyer')
             .populate('type');
         return product;

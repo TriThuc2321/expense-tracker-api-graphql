@@ -14,21 +14,9 @@ const WorkspaceType = `
         workspace(_id: String!): Workspace,
     }
 
-    input WorkspaceCreateInput {
-        name: String!
-        host: String!
-        collaborators: [String]
-    }
-
-    input WorkspaceUpdateInput {
-        _id: String!
-        name: String
-        collaborators: [String]
-    }
-
     extend type Mutation {
-        addWorkspace(data: WorkspaceCreateInput): Workspace
-        updateWorkspace(data: WorkspaceUpdateInput): Workspace
+        addWorkspace(name: String! , host: String!, collaborators: [String]): Workspace
+        updateWorkspace(_id: String!, name: String, collaborators: [String]): Workspace
         deleteWorkspace(_id: String!): Message
     }
 `;

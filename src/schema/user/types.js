@@ -11,15 +11,8 @@ const UserType = `
         user(email: String!): User
     }
 
-    input UserCreateInput {
-        uid: String!
-        name: String!
-        picture: String
-        email: String!
-    }
-
     extend type Mutation {
-        addUser(data: UserCreateInput): User,
+        addUser( uid: String!, name: String!, picture: String, email: String!): User,
     }
 `;
 
