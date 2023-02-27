@@ -1,8 +1,8 @@
 import { UserTypes, UserQuery, UserMutation } from './user/index.js';
-import { WorkspaceTypes, WorkspaceQuery, WorkspaceMutation } from './workspace/index.js';
+import { WorkspaceTypes, WorkspaceQuery, WorkspaceMutation, WorkspaceResolver } from './workspace/index.js';
 import { ProductTypes, ProductQuery, ProductMutation } from './product/index.js';
 import { ProductTypeTypes, ProductTypeQuery, ProductTypeMutation } from './productType/index.js';
-import { BillTypes, BillQuery, BillMutation } from './bill/index.js';
+import { BillTypes, BillQuery, BillMutation, BillResolver } from './bill/index.js';
 
 export const typeDefs = `#graphql
     type Query
@@ -32,4 +32,6 @@ export const resolvers = {
         ...ProductTypeMutation,
         ...BillMutation,
     },
+    ...BillResolver,
+    ...WorkspaceResolver,
 };

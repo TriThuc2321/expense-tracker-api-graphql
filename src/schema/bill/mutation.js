@@ -4,17 +4,40 @@ import WorkspaceModel from './../workspace/db.js';
 
 const BillMutation = {
     addBill: async (parent, args) => {
-        const { buyer, workspaceId } = args;
-        const newBill = new BillModel({ buyer });
+        const { buyer, generals, specifics, workspaceId } = args;
+
+        const generalIds = await Promise.all(
+            generals.map(async (product) => {
+                const { name, price, typeId, buyerId } = product;
+                const newProduct = new ProductModel({ name, price, type: typeId, buyer: buyerId });
+                await newProduct.save();
+                return newProduct._id;
+            }),
+        );
+
+        const specificIds = await Promise.all(
+            specifics.map(async (product) => {
+                const { name, price, typeId, buyerId } = product;
+                const newProduct = new ProductModel({ name, price, type: typeId, buyer: buyerId });
+                await newProduct.save();
+                return newProduct._id;
+            }),
+        );
+        const newBill = new BillModel({ buyer, generals: generalIds, specifics: specificIds });
+
         await newBill.save();
 
         await WorkspaceModel.findByIdAndUpdate(workspaceId, { $push: { bills: newBill._id } }, { new: true });
-        return newBill.populate('buyer');
+        return newBill;
     },
 
     updateBill: async (parent, args) => {
-        const { _id, buyer } = args;
-        const bill = await BillModel.findOneAndUpdate({ _id }, { buyer }, { new: true }).populate('buyer');
+        const { _id, buyer, generalIds, specificIds } = args;
+        const bill = await BillModel.findOneAndUpdate(
+            { _id },
+            { buyer, generals: generalIds, specifics: specificIds },
+            { new: true },
+        );
         return bill;
     },
 

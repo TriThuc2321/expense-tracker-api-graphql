@@ -6,6 +6,14 @@ const billSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
         },
+        generals: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Product',
+        },
+        specifics: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Product',
+        },
     },
     { timestamps: true },
 );
