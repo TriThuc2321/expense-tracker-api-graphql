@@ -4,9 +4,10 @@ const WorkspaceQuery = {
     myWorkspaces: async (parent, args, context) => {
         const { email } = context;
 
-        const workspaces = await WorkspaceModel.find({ email }).populate('host').populate('collaborators').sort({
-            updatedAt: 'desc',
-        });
+        const workspaces = await WorkspaceModel.find({ email })
+            .populate('host')
+            .populate('collaborators')
+            .sort({ updatedAt: 'desc' });
         return workspaces;
     },
 

@@ -9,6 +9,7 @@ const BillType = `
 
     extend type Query {
         bills(workspaceId: String!): [Bill]
+        bill(billId: String!): Bill
     }
 
     extend type Mutation {

@@ -1,6 +1,4 @@
 import BillModel from './db.js';
-import ProductModel from './../product/db.js';
-import WorkspaceModel from './../workspace/db.js';
 
 const BillMutation = {
     addBill: async (parent, args) => {
@@ -12,7 +10,7 @@ const BillMutation = {
     },
 
     deleteBill: async (parent, args) => {
-        const { _id, workspaceId } = args;
+        const { _id } = args;
         try {
             await BillModel.deleteOne({ _id });
             return { message: 'Delete bill successfully', type: 'SUCCESS' };
