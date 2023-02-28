@@ -9,6 +9,7 @@ const UserType = `
     
     extend type Query {
         user(email: String!): User
+        collaborators(workspaceId: String!): [User]
     }
 
     extend type Mutation {
