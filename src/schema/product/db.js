@@ -18,6 +18,10 @@ const productSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ProductType',
         },
+        bill: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Bill',
+        },
     },
     { timestamps: true },
 );

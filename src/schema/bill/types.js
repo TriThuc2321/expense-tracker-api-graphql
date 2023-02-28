@@ -4,19 +4,16 @@ const BillType = `
         buyer: User
         specifics: [Product]
         generals: [Product]
+        updatedAt: String
     }
 
-    input ProductInput {
-        name: String!
-        typeId: String!
-        price: Int
-        buyerId: String!
+    extend type Query {
+        bills(workspaceId: String!): [Bill]
     }
 
     extend type Mutation {
-        addBill(buyer: String!, workspaceId: String!, generals: [ProductInput], specifics: [ProductInput]): Bill
-        updateBill(_id: String!, buyer: String!, productIds: [String]): Bill
-        deleteBill(_id: String!, workspaceId: String!): Message
+        addBill(buyerId: String!, workspaceId: String!): Bill
+        deleteBill(_id: String!): Message
     }
 `;
 

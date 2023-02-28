@@ -11,10 +11,6 @@ const workspaceSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
         },
-        bills: {
-            type: [mongoose.Schema.Types.ObjectId],
-            ref: 'Bill',
-        },
         collaborators: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: 'User',

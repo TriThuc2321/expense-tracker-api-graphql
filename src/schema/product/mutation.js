@@ -2,8 +2,8 @@ import ProductModel from './db.js';
 
 const ProductMutation = {
     addProduct: async (parent, args) => {
-        const { name, price, typeId, buyerId } = args;
-        const newProduct = new ProductModel({ name, price, type: typeId, buyer: buyerId });
+        const { name, price, typeId, buyerId, billId } = args;
+        const newProduct = new ProductModel({ name, price, type: typeId, buyer: buyerId, bill: billId });
         await newProduct.save();
         return newProduct;
     },
