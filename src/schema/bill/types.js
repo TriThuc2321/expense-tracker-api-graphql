@@ -4,7 +4,7 @@ const BillType = `
         buyer: User
         specifics: [Product]
         generals: [Product]
-        updatedAt: String
+        createdAt: Date
     }
 
     extend type Query {

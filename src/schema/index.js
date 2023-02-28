@@ -1,3 +1,5 @@
+import { GraphQLScalarType } from 'graphql';
+
 import { UserTypes, UserQuery, UserMutation } from './user/index.js';
 import { WorkspaceTypes, WorkspaceQuery, WorkspaceMutation, WorkspaceResolver } from './workspace/index.js';
 import { ProductTypes, ProductQuery, ProductMutation } from './product/index.js';
@@ -5,6 +7,7 @@ import { ProductTypeTypes, ProductTypeQuery, ProductTypeMutation } from './produ
 import { BillTypes, BillQuery, BillMutation, BillResolver } from './bill/index.js';
 
 export const typeDefs = `#graphql
+    scalar Date
     type Query
     type Mutation
     type Message {
@@ -18,6 +21,15 @@ export const typeDefs = `#graphql
     ${BillTypes}
 `;
 export const resolvers = {
+    Date: new GraphQLScalarType({
+        name: 'Date',
+        parseValue(value) {
+            return new Date(value);
+        },
+        serialize(value) {
+            return value.toISOString();
+        },
+    }),
     Query: {
         ...UserQuery,
         ...WorkspaceQuery,

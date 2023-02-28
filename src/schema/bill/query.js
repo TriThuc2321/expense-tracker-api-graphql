@@ -4,7 +4,7 @@ const BillQuery = {
     bills: async (parent, args) => {
         const { workspaceId } = args;
 
-        const bills = await BillModel.find({ workspace: workspaceId }).populate('buyer').sort({ updatedAt: 'desc' });
+        const bills = await BillModel.find({ workspace: workspaceId }).populate('buyer').sort({ createdAt: 'desc' });
         return bills;
     },
 
