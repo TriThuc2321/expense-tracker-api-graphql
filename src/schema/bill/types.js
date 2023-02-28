@@ -14,7 +14,7 @@ const BillType = `
 
     extend type Mutation {
         addBill(buyerId: String!, workspaceId: String!): Bill
-        deleteBill(_id: String!): Message
+        deleteBill(billId: String!): Message
     }
 `;
 

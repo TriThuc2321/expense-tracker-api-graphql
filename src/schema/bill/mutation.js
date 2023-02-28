@@ -1,4 +1,5 @@
 import BillModel from './db.js';
+import ProductModel from './../product/db.js';
 
 const BillMutation = {
     addBill: async (parent, args) => {
@@ -10,9 +11,11 @@ const BillMutation = {
     },
 
     deleteBill: async (parent, args) => {
-        const { _id } = args;
+        const { billId } = args;
         try {
-            await BillModel.deleteOne({ _id });
+            await ProductModel.deleteMany({ bill: billId });
+            await BillModel.deleteOne({ _id: billId });
+
             return { message: 'Delete bill successfully', type: 'SUCCESS' };
         } catch (err) {
             return { message: err.toString(), type: 'ERROR' };
