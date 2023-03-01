@@ -32,6 +32,8 @@ const server = new ApolloServer({
 
 await server.start();
 
+app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
+
 mongoose.set('strictQuery', false);
 mongoose
     .connect(URI)
@@ -41,5 +43,3 @@ mongoose
         console.log(`App is listening on port ${PORT}`);
     })
     .catch((err) => console.log(err));
-
-app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
