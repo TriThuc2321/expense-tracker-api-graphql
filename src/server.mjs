@@ -34,6 +34,12 @@ await server.start();
 
 app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
 
+app.all('/', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+    next();
+});
+
 mongoose.set('strictQuery', false);
 mongoose
     .connect(URI)
