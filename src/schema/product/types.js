@@ -13,8 +13,8 @@ const ProductType = `
 
     extend type Mutation {
         addProduct(name: String!, typeId: String!, price: Int, buyerId: String!, billId: String!): Product,
-        updateProduct( _id: String!, name: String, typeId: String, price: Int, buyerId: String): Product,
-        deleteProduct(_id: String!): Message,
+        updateProduct(productId: String!, name: String, price: Int, buyerId: String): Product,
+        deleteProduct(productId: String!): Message,
     }
 `;
 
