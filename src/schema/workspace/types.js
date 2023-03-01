@@ -10,7 +10,7 @@ const WorkspaceType = `
     }
     
     extend type Query {
-        myWorkspaces: [Workspace],
+        myWorkspaces(userId: String!): [Workspace],
         workspace(_id: String!): Workspace,
     }
 
