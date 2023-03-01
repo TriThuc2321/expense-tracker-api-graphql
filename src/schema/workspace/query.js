@@ -1,10 +1,10 @@
 import WorkspaceModel from './db.js';
 
 const WorkspaceQuery = {
-    myWorkspaces: async (parent, args, context) => {
-        const { email } = context;
+    myWorkspaces: async (parent, args) => {
+        const { userId } = args;
 
-        const workspaces = await WorkspaceModel.find({ email })
+        const workspaces = await WorkspaceModel.find({ $or: [{ host: userId }, { collaborators: userId }] })
             .populate('host')
             .populate('collaborators')
             .sort({ updatedAt: 'desc' });
