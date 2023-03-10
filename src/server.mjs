@@ -2,10 +2,13 @@ import express from 'express';
 import http from 'http';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import bodyParser from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import { typeDefs, resolvers } from './schema/index.js';
@@ -23,11 +26,26 @@ const PORT = process.env.PORT || 8000;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
+const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+});
+const serverCleanup = useServer({ schema }, wsServer);
+
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
     schema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+        ApolloServerPluginDrainHttpServer({ httpServer }),
+        {
+            async serverWillStart() {
+                return {
+                    async drainServer() {
+                        await serverCleanup.dispose();
+                    },
+                };
+            },
+        },
+    ],
 });
 
 await server.start();
